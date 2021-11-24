@@ -1,0 +1,19 @@
+version: '3'
+services:
+
+  java-srv:
+    build: java-srv
+    depends_on:
+      - db
+
+  db:
+      image: mongo:latest
+      volumes:
+          - ./db/data_dump:/data/db
+            # seeding scripts
+          - ./db/sql:/docker-entrypoint-initdb.d
+      environment:
+      - MONGO_INITDB_ROOT_USERNAME=admin
+      - MONGO_INITDB_ROOT_PASSWORD=admin
+      ports:
+          - "27017:27017"
